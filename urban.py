@@ -9,10 +9,17 @@ UD_URL = 'http://api.urbandictionary.com/v0/define?term='
 def get_def(word, num=0):
     url = UD_URL + word
     resp = json.loads(web.get(url))
+    nom = num + 1
     if resp['result_type'] == 'no_results':
         definition = 'Definition %s not found!' % (word)
     else:
-        definition = resp['list'][num]['definition']
+        try:
+            item = resp['list'][num]['definition']
+            total_nom = len(resp['list'])
+            definition = '(%s/%s) %s' % (nom, total_nom, item)
+        except IndexError:
+            definition = ('Definition entry %s does'
+                          'not exist for \'%s\'.' % (nom, word))
     return definition
 
 
