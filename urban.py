@@ -25,6 +25,9 @@ def get_def(word, num=0):
 
 @commands('urban')
 def urban(bot, trigger):
+    if not trigger.group(2):
+            bot.reply('.urban [defnum] <term>')
+            return
     args = trigger.group(2).split(' ')
     defnum = 0
     word = ' '.join(args)
